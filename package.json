@@ -30,6 +30,7 @@
   "dependencies": {
     "@arco-design/web-vue": "^2.52.0",
     "@vueuse/core": "^10.5.0",
+    "axios": "^1.5.1",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
@@ -38,6 +39,7 @@
     "@arco-plugins/vite-vue": "^1.4.5",
     "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
+    "@types/mockjs": "^1.0.8",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "@vitejs/plugin-vue": "^4.2.3",
@@ -50,6 +52,7 @@
     "eslint-plugin-vue": "^9.17.0",
     "husky": "^8.0.0",
     "less": "^4.2.0",
+    "mockjs": "^1.1.0",
     "prettier": "^3.0.3",
     "rollup-plugin-visualizer": "^5.9.2",
     "stylelint": "^15.10.3",

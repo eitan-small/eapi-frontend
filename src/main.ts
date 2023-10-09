@@ -3,6 +3,7 @@ import ArcoVue from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 import App from './App.vue';
 import '@/assets/style/global.less';
+import './mock';
 
 const app = createApp(App);
 
