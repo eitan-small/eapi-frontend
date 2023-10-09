@@ -30,4 +30,12 @@ export default defineConfig({
   define: {
     'process.env': {},
   },
+  css: {
+    preprocessorOptions: {
+      less: {
+        additionalData: `@import "@/assets/style/variable.less";`,
+        javascriptEnabled: true,
+      },
+    },
+  },
 });
