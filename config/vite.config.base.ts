@@ -1,10 +1,15 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import svgLoader from 'vite-svg-loader';
 import configArcoStyleImportPlugin from './plugin/arcoStyleImport';
 
 export default defineConfig({
-  plugins: [vue(), configArcoStyleImportPlugin()],
+  plugins: [
+    vue(),
+    svgLoader({ svgoConfig: {} }),
+    configArcoStyleImportPlugin(),
+  ],
   resolve: {
     alias: [
       {
@@ -17,7 +22,7 @@ export default defineConfig({
       },
       {
         find: 'vue',
-        replacement: 'vue/dist/vue.esm-bundler.js', // compile template
+        replacement: 'vue/dist/vue.esm-bundler.js',
       },
     ],
     extensions: ['.ts', '.js'],
