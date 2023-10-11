@@ -19,7 +19,11 @@
         placeholder="密码"
         style="height: 3vh; border-radius: 1.5vh"
         allow-clear
-      />
+      >
+        <template #prefix>
+          <icon-lock />
+        </template>
+      </a-input-password>
     </a-form-item>
     <a-form-item>
       <a-input-password
@@ -27,7 +31,11 @@
         placeholder="确认密码"
         style="height: 3vh; border-radius: 1.5vh"
         allow-clear
-      />
+      >
+        <template #prefix>
+          <icon-lock />
+        </template>
+      </a-input-password>
     </a-form-item>
     <a-form-item>
       <a-button
