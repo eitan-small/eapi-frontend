@@ -1,5 +1,6 @@
-import { LoginData } from '@/api/user';
+import { LoginData, login } from '@/api/user';
 import { defineStore } from 'pinia';
+import { clearToken, setToken } from '@/utils/auth';
 import { UserState } from './types';
 
 const useUserStore = defineStore('user', {
@@ -23,7 +24,13 @@ const useUserStore = defineStore('user', {
   }),
   actions: {
     async login(loginForm: LoginData) {
-      console.log(loginForm);
+      try {
+        const res = await login(loginForm);
+        setToken(res.data.token);
+      } catch (err) {
+        clearToken();
+        throw err;
+      }
     },
   },
 });

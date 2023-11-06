@@ -5,6 +5,7 @@ import router from './router';
 import store from './store';
 import '@/assets/style/global.less';
 import './mock';
+import '@/api/interceptor';
 import App from './App.vue';
 
 const app = createApp(App);

@@ -6,6 +6,7 @@ import setupMock, {
 import { MockParams } from '@/types/mock';
 
 setupMock({
+  mock: false,
   setup() {
     // 登录
     Mock.mock(new RegExp('/api/user/login'), (params: MockParams) => {
