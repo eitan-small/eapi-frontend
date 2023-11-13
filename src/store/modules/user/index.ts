@@ -1,36 +1,69 @@
-import { LoginData, login } from '@/api/user';
+import {
+  LoginData,
+  login as userLogin,
+  logout as userLogout,
+  getUserInfo,
+} from '@/api/user';
 import { defineStore } from 'pinia';
 import { clearToken, setToken } from '@/utils/auth';
 import { UserState } from './types';
+import useAppStore from '../app';
 
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    name: undefined,
-    avatar: undefined,
-    job: undefined,
-    organization: undefined,
-    location: undefined,
+    userId: undefined,
+    username: undefined,
+    nickname: undefined,
     email: undefined,
-    introduction: undefined,
-    personalWebsite: undefined,
-    jobName: undefined,
-    organizationName: undefined,
-    locationName: undefined,
-    phone: undefined,
-    registrationDate: undefined,
-    accountId: undefined,
-    certification: undefined,
-    role: '',
+    mobile: undefined,
+    sex: undefined,
+    avatar: undefined,
+    loginIp: undefined,
+    loginDate: undefined,
+    permissions: [],
+    roles: [],
   }),
   actions: {
+    // Set user's information
+    setInfo(partial: Partial<UserState>) {
+      this.$patch(partial);
+    },
+
+    // Reset user's information
+    resetInfo() {
+      this.$reset();
+    },
+
+    // Get user's information
+    async info() {
+      const res = await getUserInfo();
+      this.setInfo(res.data);
+    },
+
+    // Login
     async login(loginForm: LoginData) {
       try {
-        const res = await login(loginForm);
+        const res = await userLogin(loginForm);
         setToken(res.data.token);
       } catch (err) {
         clearToken();
         throw err;
       }
+    },
+
+    // Logout
+    async logout() {
+      try {
+        await userLogout();
+      } finally {
+        this.logoutCallBack();
+      }
+    },
+    logoutCallBack() {
+      const appStore = useAppStore();
+      this.resetInfo();
+      clearToken();
+      appStore.clearServerMenu();
     },
   },
 });
