@@ -20,8 +20,7 @@ const useUserStore = defineStore('user', {
     avatar: undefined,
     loginIp: undefined,
     loginDate: undefined,
-    permissions: [],
-    roles: [],
+    roles: undefined,
   }),
   actions: {
     // Set user's information

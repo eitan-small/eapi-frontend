@@ -8,6 +8,5 @@ export interface UserState {
   avatar?: string;
   loginIp?: string;
   loginDate?: string;
-  permissions?: string[];
   roles?: string[];
 }

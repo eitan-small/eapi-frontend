@@ -1,6 +1,11 @@
 import axios from 'axios';
-import type { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import type {
+  InternalAxiosRequestConfig,
+  AxiosResponse,
+  AxiosRequestHeaders,
+} from 'axios';
 import { Message } from '@arco-design/web-vue';
+import { getToken } from '@/utils/auth';
 
 export interface HttpResponse<T = unknown> {
   status: number;
@@ -15,6 +20,13 @@ if (import.meta.env.VITE_API_BASE_URL) {
 
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    const token = getToken();
+    if (token) {
+      if (!config.headers) {
+        config.headers = {} as AxiosRequestHeaders;
+      }
+    }
+    config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   (error) => {
