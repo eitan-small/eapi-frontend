@@ -6,30 +6,49 @@
         >Epsilon Open Platform</a-typography-title
       >
     </div>
-    <div class="right-side">
-      <a-dropdown trigger="click">
-        <a-avatar
-          :size="32"
-          :style="{ marginRight: '20px', cursor: 'pointer' }"
+    <ul class="right-side">
+      <li>
+        <a-tooltip
+          :content="isFullscreen ? '点击切换全屏模式' : '点击退出全屏模式'"
         >
-          {{ nickname }}
-        </a-avatar>
-        <template #content>
-          <a-doption>
-            <a-space>
-              <icon-user />
-              <span> 用户信息 </span>
-            </a-space>
-          </a-doption>
-          <a-doption>
-            <a-space @click="handleLogout">
-              <icon-export />
-              <span> 退出登录 </span>
-            </a-space>
-          </a-doption>
-        </template>
-      </a-dropdown>
-    </div>
+          <a-button
+            class="nav-btn"
+            type="outline"
+            :shape="'circle'"
+            @click="toggleFullScreen"
+          >
+            <template #icon>
+              <icon-fullscreen-exit v-if="isFullscreen" />
+              <icon-fullscreen v-else />
+            </template>
+          </a-button>
+        </a-tooltip>
+      </li>
+      <li>
+        <a-dropdown trigger="click" position="br">
+          <a-avatar
+            :size="32"
+            :style="{ marginRight: '8px', cursor: 'pointer' }"
+          >
+            {{ nickname }}
+          </a-avatar>
+          <template #content>
+            <a-doption>
+              <a-space>
+                <icon-user />
+                <span> 用户信息 </span>
+              </a-space>
+            </a-doption>
+            <a-doption>
+              <a-space @click="handleLogout">
+                <icon-export />
+                <span> 退出登录 </span>
+              </a-space>
+            </a-doption>
+          </template>
+        </a-dropdown>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -38,9 +57,11 @@
   import { useUserStore } from '@/store';
   import { computed } from 'vue';
   import useUser from '@/hooks/user';
+  import { useFullscreen } from '@vueuse/core';
 
   const userStore = useUserStore();
   const { logout } = useUser();
+  const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 
   const nickname = computed(() => {
     return userStore.nickname?.charAt(0);
@@ -57,6 +78,7 @@
     align-self: center;
     justify-content: space-between;
     height: 100%;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .left-side {
@@ -71,7 +93,18 @@
 
   .right-side {
     display: flex;
-    align-items: center;
     padding-right: 20px;
+
+    li {
+      display: flex;
+      align-items: center;
+      margin: 0 8px;
+    }
+
+    .nav-btn {
+      color: rgb(var(--gray-8));
+      font-size: 15px;
+      border-color: rgb(var(--gray-2));
+    }
   }
 </style>
