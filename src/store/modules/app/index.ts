@@ -6,20 +6,7 @@ import { getMenuList } from '@/api/user';
 import { AppState } from './types';
 
 const defaultSettings: AppState = {
-  theme: 'light',
-  colorWeak: false,
-  navbar: true,
-  menu: true,
-  topMenu: false,
-  hideMenu: false,
-  menuCollapse: false,
-  footer: true,
-  themeColor: '#165DFF',
-  menuWidth: 220,
-  globalSettings: false,
-  device: 'desktop',
-  tabBar: false,
-  menuFromServer: false,
+  menuFromServer: true,
   serverMenu: [],
 };
 

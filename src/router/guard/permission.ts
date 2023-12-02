@@ -44,7 +44,7 @@ export default function setupPermissionGuard(router: Router) {
           );
         }
       }
-      if (exist && permissionsAllow) {
+      if (exist) {
         next();
       } else next(NOT_FOUND);
     } else {

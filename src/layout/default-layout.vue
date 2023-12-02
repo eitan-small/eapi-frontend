@@ -1,17 +1,20 @@
 <template>
-  <a-layout class="layout">
-    <a-layout-header class="layout-navbar">
+  <div class="layout">
+    <div class="header">
       <NavBar />
-    </a-layout-header>
-    <a-layout>
-      <a-layout-sider>Sider</a-layout-sider>
-      <a-layout-content>Content</a-layout-content>
-    </a-layout>
-  </a-layout>
+    </div>
+    <div class="body">
+      <div class="menu-wrapper">
+        <Menu />
+      </div>
+      <div>Content</div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
   import NavBar from '@/components/navbar/index.vue';
+  import Menu from '@/components/menu/index.vue';
 </script>
 
 <style scoped lang="less">
@@ -22,8 +25,38 @@
     height: 100vh;
   }
 
-  .layout-navbar {
+  .header {
     width: 100%;
     height: @nav-size-height;
+  }
+
+  .body {
+    display: inline-flex;
+    flex-direction: row;
+    height: calc(100vh - @nav-size-height);
+  }
+
+  .menu-wrapper {
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+
+    :deep(.arco-menu) {
+      ::-webkit-scrollbar {
+        width: 12px;
+        height: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: var(--color-text-4);
+        background-clip: padding-box;
+        border: 4px solid transparent;
+        border-radius: 7px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-text-3);
+      }
+    }
   }
 </style>
