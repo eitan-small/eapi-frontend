@@ -1,13 +1,8 @@
 <template>
   <div>
-    <h1 class="title" style="font-size: 3vh">登录</h1>
-    <div class="login-form-error-msg">{{ errorMessage }}</div>
-    <a-form
-      layout="vertical"
-      class="login-form"
-      :model="userInfo"
-      @submit="handleSubmit"
-    >
+    <h1 class="title" style="font-size: 3vh">注册</h1>
+    <div class="register-form-error-msg">{{ errorMessage }}</div>
+    <a-form layout="vertical" class="register-form" :model="userInfo">
       <a-form-item
         field="username"
         :rules="[{ required: true, message: '用户名不能为空' }]"
@@ -50,7 +45,7 @@
           html-type="submit"
           long
           style="height: 3vh; border-radius: 1.5vh"
-          >立即登录</a-button
+          >立即注册</a-button
         >
       </a-form-item>
     </a-form>
@@ -59,55 +54,17 @@
 
 <script setup lang="ts">
   import { reactive, ref } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
-  import { useUserStore } from '@/store';
-  import { LoginData } from '@/api/user';
-  import useLoading from '@/hooks/loading';
-  import { Message } from '@arco-design/web-vue';
 
-  const router = useRouter();
   const errorMessage = ref('');
-  const { loading, setLoading } = useLoading();
 
   const userInfo = reactive({
     username: '',
     password: '',
   });
-  const userStore = useUserStore();
-
-  const handleSubmit = async ({
-    errors,
-    values,
-  }: {
-    errors: Record<string, ValidatedError> | undefined;
-    values: Record<string, any>;
-  }) => {
-    if (loading.value) return;
-    if (!errors) {
-      setLoading(true);
-      try {
-        // 通知仓库
-        await userStore.login(values as LoginData);
-        const { redirect, ...othersQuery } = router.currentRoute.value.query;
-        router.push({
-          name: (redirect as string) || 'Workplace',
-          query: {
-            ...othersQuery,
-          },
-        });
-        Message.success('登录成功');
-      } catch (err) {
-        errorMessage.value = (err as Error).message;
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
 </script>
 
 <style lang="less" scoped>
-  .login-form {
+  .register-form {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -117,7 +74,7 @@
     text-align: center;
   }
 
-  .login-form-error-msg {
+  .register-form-error-msg {
     color: red;
   }
 </style>

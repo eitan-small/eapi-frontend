@@ -35,6 +35,7 @@
   import { TagProps } from '@/store/modules/tab-bar/types';
   import { useRoute, useRouter } from 'vue-router';
   import { computed } from 'vue';
+  import { REDIRECT_ROUTE_NAME } from '@/router/constants';
 
   const tabBarStore = useTabBarStore();
   const route = useRoute();
@@ -89,7 +90,7 @@
     } else if (value === Action.reload) {
       tabBarStore.deleteCache(itemData);
       await router.push({
-        name: 'redirect',
+        name: REDIRECT_ROUTE_NAME,
         params: {
           path: route.fullPath,
         },

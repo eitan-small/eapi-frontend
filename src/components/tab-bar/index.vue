@@ -26,6 +26,7 @@
   } from '@/utils/route-listener';
   import { useTabBarStore } from '@/store';
   import { RouteLocationNormalized } from 'vue-router';
+  import { WHITE_LIST } from '@/router/constants';
   import TabItem from './tab-item.vue';
 
   const tabBarStore = useTabBarStore();
@@ -60,7 +61,7 @@
     if (
       !tagList.value.some((tag) => tag.fullPath === route.fullPath) &&
       // 重新加载时，重定向页面不加入TabList
-      route.name !== 'redirect'
+      !WHITE_LIST.some(({ name }) => name === route.name)
     ) {
       tabBarStore.updateTabList(route);
     }

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import NProgress from 'nprogress';
+import { REDIRECT_ROUTE_NAME } from '@/router/constants';
 import createRouteGuard from './guard';
 import appRoutes from './routes';
 
@@ -31,7 +32,7 @@ const router = createRouter({
       children: [
         {
           path: '/redirect/:path',
-          name: 'redirect',
+          name: REDIRECT_ROUTE_NAME,
           component: () => import('@/views/redirect/index.vue'),
           meta: {
             requiresAuth: true,

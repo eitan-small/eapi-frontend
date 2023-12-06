@@ -1,17 +1,8 @@
 import type { Router, RouteRecordNormalized } from 'vue-router';
 import NProgress from 'nprogress'; // progress bar
+import { WHITE_LIST, NOT_FOUND } from '@/router/constants';
 
 import { useAppStore } from '@/store';
-
-const WHITE_LIST = [
-  { name: 'notFound', children: [] },
-  { name: 'login', children: [] },
-  { name: 'redirect', children: [] },
-];
-
-const NOT_FOUND = {
-  name: 'notFound',
-};
 
 export default function setupPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
