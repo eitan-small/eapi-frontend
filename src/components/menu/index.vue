@@ -14,16 +14,12 @@
 <script setup lang="ts">
   import { useAppStore } from '@/store';
   import { computed } from 'vue';
-  import appRoutes from '@/router/routes';
   import MenuTree from './menu-tree.vue';
 
   const appStore = useAppStore();
 
   const menuTree = computed(() => {
-    if (appStore.menuFromServer) {
-      return appStore.appAsyncMenus;
-    }
-    return appRoutes;
+    return appStore.appAsyncMenus;
   });
 </script>
 

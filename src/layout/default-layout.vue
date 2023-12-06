@@ -4,10 +4,19 @@
       <NavBar />
     </div>
     <div class="body">
-      <div class="menu-wrapper">
-        <Menu />
+      <Menu />
+      <div class="content">
+        <TabBar />
+        <div class="page-layout">
+          <router-view v-slot="{ Component, route }">
+            <transition name="fade" mode="out-in" appear>
+              <keep-alive :include="cacheList">
+                <component :is="Component" :key="route.fullPath" />
+              </keep-alive>
+            </transition>
+          </router-view>
+        </div>
       </div>
-      <div>Content</div>
     </div>
   </div>
 </template>
@@ -15,6 +24,13 @@
 <script lang="ts" setup>
   import NavBar from '@/components/navbar/index.vue';
   import Menu from '@/components/menu/index.vue';
+  import TabBar from '@/components/tab-bar/index.vue';
+  import { computed } from 'vue';
+  import { useTabBarStore } from '@/store';
+
+  const tabBarStore = useTabBarStore();
+
+  const cacheList = computed(() => tabBarStore.getCacheList);
 </script>
 
 <style scoped lang="less">
@@ -33,30 +49,34 @@
   .body {
     display: inline-flex;
     flex-direction: row;
+    width: 100vw;
     height: calc(100vh - @nav-size-height);
   }
 
-  .menu-wrapper {
-    height: 100%;
-    overflow: auto;
-    overflow-x: hidden;
+  .content {
+    width: 100%;
+    background-color: rgb(var(--gray-3));
+  }
 
-    :deep(.arco-menu) {
-      ::-webkit-scrollbar {
-        width: 12px;
-        height: 4px;
-      }
+  .page-layout {
+    margin: 0 20px;
+  }
 
-      ::-webkit-scrollbar-thumb {
-        background-color: var(--color-text-4);
-        background-clip: padding-box;
-        border: 4px solid transparent;
-        border-radius: 7px;
-      }
+  :deep(.arco-menu) {
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 4px;
+    }
 
-      ::-webkit-scrollbar-thumb:hover {
-        background-color: var(--color-text-3);
-      }
+    ::-webkit-scrollbar-thumb {
+      background-color: var(--color-text-4);
+      background-clip: padding-box;
+      border: 4px solid transparent;
+      border-radius: 7px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: var(--color-text-3);
     }
   }
 </style>

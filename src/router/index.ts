@@ -21,6 +21,26 @@ const router = createRouter({
       },
     },
     {
+      path: '/redirect',
+      name: 'redirectWrapper',
+      component: () => import('@/layout/default-layout.vue'),
+      meta: {
+        requiresAuth: true,
+        hideInMenu: true,
+      },
+      children: [
+        {
+          path: '/redirect/:path',
+          name: 'redirect',
+          component: () => import('@/views/redirect/index.vue'),
+          meta: {
+            requiresAuth: true,
+            hideInMenu: true,
+          },
+        },
+      ],
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
       component: () => import('@/views/not-found/index.vue'),

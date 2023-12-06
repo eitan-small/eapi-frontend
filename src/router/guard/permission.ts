@@ -2,12 +2,11 @@ import type { Router, RouteRecordNormalized } from 'vue-router';
 import NProgress from 'nprogress'; // progress bar
 
 import { useAppStore } from '@/store';
-import usePermission from '@/hooks/permission';
-import appRoutes from '../routes';
 
 const WHITE_LIST = [
   { name: 'notFound', children: [] },
   { name: 'login', children: [] },
+  { name: 'redirect', children: [] },
 ];
 
 const NOT_FOUND = {
@@ -17,8 +16,6 @@ const NOT_FOUND = {
 export default function setupPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     const appStore = useAppStore();
-    const Permission = usePermission();
-    const permissionsAllow = Permission.accessRouter(to);
     if (appStore.menuFromServer) {
       // 针对来自服务端的菜单配置进行处理
       // Handle routing configuration from the server
@@ -48,13 +45,7 @@ export default function setupPermissionGuard(router: Router) {
         next();
       } else next(NOT_FOUND);
     } else {
-      // eslint-disable-next-line no-lonely-if
-      if (permissionsAllow) next();
-      else {
-        const destination =
-          Permission.findFirstPermissionRoute(appRoutes) || NOT_FOUND;
-        next(destination);
-      }
+      next();
     }
     NProgress.done();
   });

@@ -8,6 +8,9 @@ const DASHBOARD: RouteRecordRaw = {
   meta: {
     requiresAuth: true,
     order: 0,
+    type: 1,
+    title: '仪表盘',
+    icon: 'icon-dashboard',
   },
   children: [
     {
@@ -17,6 +20,8 @@ const DASHBOARD: RouteRecordRaw = {
       meta: {
         requiresAuth: true,
         roles: ['*'],
+        type: 2,
+        title: '工作台',
       },
     },
   ],

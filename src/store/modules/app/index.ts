@@ -3,6 +3,7 @@ import { Notification } from '@arco-design/web-vue';
 import { RouteRecordNormalized } from 'vue-router';
 import type { NotificationReturn } from '@arco-design/web-vue/es/notification/interface';
 import { getMenuList } from '@/api/user';
+import appRoutes from '@/router/routes';
 import { AppState } from './types';
 
 const defaultSettings: AppState = {
@@ -15,7 +16,10 @@ const useAppStore = defineStore('app', {
 
   getters: {
     appAsyncMenus(state: AppState): RouteRecordNormalized[] {
-      return state.serverMenu as unknown as RouteRecordNormalized[];
+      if (state.menuFromServer) {
+        return state.serverMenu as unknown as RouteRecordNormalized[];
+      }
+      return appRoutes;
     },
   },
 

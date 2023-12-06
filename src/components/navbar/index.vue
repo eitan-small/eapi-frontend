@@ -93,7 +93,6 @@
 
   .right-side {
     display: flex;
-    padding-right: 20px;
 
     li {
       display: flex;
