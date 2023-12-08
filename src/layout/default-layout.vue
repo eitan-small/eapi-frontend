@@ -57,6 +57,12 @@
   .content {
     width: 100%;
     background-color: rgb(var(--gray-3));
+  }
+
+  .page-layout {
+    height: calc(100vh - @nav-size-height - @tab-size-height);
+    padding: 0 20px;
+    overflow-y: auto;
 
     &::-webkit-scrollbar {
       width: 15px;
@@ -73,12 +79,6 @@
     &::-webkit-scrollbar-thumb:hover {
       background-color: var(--color-text-3);
     }
-  }
-
-  .page-layout {
-    height: calc(100vh - @nav-size-height - @tab-size-height);
-    padding: 0 20px;
-    overflow-y: auto;
   }
 
   :deep(.arco-menu) {
