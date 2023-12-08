@@ -5,8 +5,14 @@
       :style="{ width: '320px' }"
       placeholder="Please enter something"
       allow-clear
-  /></div>
+    />
+    <Icon name="login" />
+  </div>
 </template>
+
+<script setup lang="ts">
+  import Icon from '@/components/icon/index.vue';
+</script>
 
 <script lang="ts">
   export default {
