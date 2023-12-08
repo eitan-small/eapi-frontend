@@ -6,7 +6,7 @@
       :level-indent="34"
       breakpoint="xl"
     >
-      <MenuTree :menu-tree="menuTree" />
+      <MenuTree :tree-data="treeData" />
     </a-menu>
   </div>
 </template>
@@ -18,7 +18,7 @@
 
   const appStore = useAppStore();
 
-  const menuTree = computed(() => {
+  const treeData = computed(() => {
     return appStore.appAsyncMenus;
   });
 </script>
