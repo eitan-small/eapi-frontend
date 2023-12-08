@@ -10,20 +10,20 @@
         v-show="tagList.length > 1"
         @click.stop="tagClose(props.itemData, index)"
       >
-        <icon-close class="icon-close" />
+        <Icon name="icon-close" class="icon-close" />
       </span>
     </div>
     <template #content>
       <a-doption :disabled="disabledReload" :value="Action.reload">
-        <icon-refresh />
+        <Icon name="icon-refresh" />
         <span>重新加载</span>
       </a-doption>
-      <a-doption :value="Action.current">
-        <icon-close />
+      <a-doption :disabled="disabledClose" :value="Action.current">
+        <Icon name="icon-close" />
         <span>关闭当前标签页</span>
       </a-doption>
-      <a-doption :value="Action.others">
-        <icon-swap />
+      <a-doption :disabled="disabledClose" :value="Action.others">
+        <Icon name="icon-swap" />
         <span>关闭其它标签页</span>
       </a-doption>
     </template>
@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
   import useTabBarStore from '@/store/modules/tab-bar';
+  import Icon from '@/components/icon/index.vue';
   import { TagProps } from '@/store/modules/tab-bar/types';
   import { useRoute, useRouter } from 'vue-router';
   import { computed } from 'vue';
@@ -69,6 +70,10 @@
     return props.itemData.fullPath !== route.fullPath;
   });
 
+  const disabledClose = computed(() => {
+    return tabBarStore.cacheTabList.size <= 1;
+  });
+
   const tagClose = (tag: TagProps, idx: number) => {
     tabBarStore.deleteTag(idx, tag);
     if (props.itemData.fullPath === route.fullPath) {
@@ -99,6 +104,8 @@
     }
   };
 </script>
+
+<script setup lang="ts"></script>
 
 <style scoped lang="less">
   .tab-item {

@@ -2,10 +2,10 @@
   <div :class="{ 'container': true, 'sign-up-mode': isActive }">
     <div class="image-container">
       <div class="inner-left">
-        <LoginSvg />
+        <Icon name="login" />
       </div>
       <div class="inner-right">
-        <RegisterSvg />
+        <Icon name="register" />
       </div>
     </div>
     <div class="login-container">
@@ -16,8 +16,7 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import LoginSvg from '@/assets/images/login.svg';
-  import RegisterSvg from '@/assets/images/register.svg';
+  import Icon from '@/components/icon/index.vue';
   import Login from '@/components/login/index.vue';
 
   const isActive = ref<boolean>(false);
