@@ -35,6 +35,7 @@
 
 <style scoped lang="less">
   @nav-size-height: 60px;
+  @tab-size-height: 56px;
 
   .layout {
     width: 100vw;
@@ -56,10 +57,28 @@
   .content {
     width: 100%;
     background-color: rgb(var(--gray-3));
+
+    &::-webkit-scrollbar {
+      width: 15px;
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-text-4);
+      background-clip: padding-box;
+      border: 4px solid transparent;
+      border-radius: 7px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: var(--color-text-3);
+    }
   }
 
   .page-layout {
-    margin: 0 20px;
+    height: calc(100vh - @nav-size-height - @tab-size-height);
+    padding: 0 20px;
+    overflow-y: auto;
   }
 
   :deep(.arco-menu) {
