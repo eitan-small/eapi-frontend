@@ -2,8 +2,8 @@ import { defineStore } from 'pinia';
 import { Notification } from '@arco-design/web-vue';
 import { RouteRecordNormalized } from 'vue-router';
 import type { NotificationReturn } from '@arco-design/web-vue/es/notification/interface';
-import { getMenuList } from '@/api/user';
 import appRoutes from '@/router/routes';
+import { getMenuList } from '@/api/user';
 import { AppState } from './types';
 
 const defaultSettings: AppState = {

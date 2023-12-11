@@ -54,7 +54,6 @@
 
   listenerRouteChange((newRoute) => {
     const menuOpenKeys = findMenuOpenKeys(newRoute.name as string);
-    console.log(menuOpenKeys);
     const keySet = new Set([...menuOpenKeys, ...openKeys.value]);
     openKeys.value = [...keySet];
     selectedKey.value = [menuOpenKeys[menuOpenKeys.length - 1]];

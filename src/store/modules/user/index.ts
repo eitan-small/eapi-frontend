@@ -1,11 +1,11 @@
+import { defineStore } from 'pinia';
+import { clearToken, setToken } from '@/utils/auth';
 import {
   LoginData,
   login as userLogin,
   logout as userLogout,
   getUserInfo,
 } from '@/api/user';
-import { defineStore } from 'pinia';
-import { clearToken, setToken } from '@/utils/auth';
 import { UserState } from './types';
 import useAppStore from '../app';
 
