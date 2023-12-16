@@ -23,6 +23,16 @@ const APPLICATION: RouteRecordRaw = {
         title: '应用列表',
       },
     },
+    {
+      path: 'detail/:appId?',
+      name: 'ApplicationDetail',
+      component: () => import('@/views/application/detail/index.vue'),
+      meta: {
+        requiresAuth: true,
+        type: 2,
+        title: '应用详情',
+      },
+    },
   ],
 };
 

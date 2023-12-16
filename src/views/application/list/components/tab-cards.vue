@@ -5,14 +5,14 @@
         <a-card hoverable>
           <a-result :status="null" title="点击创建应用">
             <template #icon>
-              <Icon name="icon-plus" svg-style="font-size: 20px" />
+              <Icon name="icon-plus" :svg-style="{ fontSize: '25px' }" />
             </template>
           </a-result>
         </a-card>
       </div>
     </a-col>
     <a-col
-      v-for="item in tabCardsData"
+      v-for="item in props.tabCardsData"
       :key="item.id"
       class="list-col"
       :xs="12"
@@ -51,7 +51,9 @@
               </a-typography-paragraph>
             </template>
             <template #avatar>
-              <a-button type="outline">查看详情</a-button>
+              <a-button type="outline" @click="goto(item.id)"
+                >查看详情</a-button
+              >
             </template>
           </a-card-meta>
         </a-card>
@@ -63,12 +65,21 @@
 <script setup lang="ts">
   import Icon from '@/components/icon/index.vue';
   import { ApplicationInfo } from '@/api/application';
+  import { useRouter } from 'vue-router';
 
   interface Props {
     tabCardsData: ApplicationInfo[];
   }
 
   const props = defineProps<Props>();
+  const router = useRouter();
+
+  const goto = (appId: number) => {
+    router.push({
+      name: 'ApplicationDetail',
+      params: { appId },
+    });
+  };
 </script>
 
 <style scoped lang="less">

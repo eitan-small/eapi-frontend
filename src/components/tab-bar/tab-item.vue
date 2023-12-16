@@ -63,7 +63,7 @@
   });
 
   const goto = (tag: TagProps) => {
-    router.push({ ...tag });
+    router.push({ path: tag.fullPath });
   };
 
   const disabledReload = computed(() => {
