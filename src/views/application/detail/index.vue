@@ -14,7 +14,10 @@
         :class="{ 'active-tab': activeTab === 'Interfaces' }"
         @click="activateTab('Interfaces')"
       >
-        <Icon name="icon-share-alt" :svg-style="{ fontSize: '24px' }" />
+        <Icon
+          name="icon-share-alt"
+          :svg-style="{ fontSize: '24px', color: '#86909C' }"
+        />
         <a-typography-paragraph>接口管理</a-typography-paragraph>
       </div>
       <div
@@ -22,7 +25,10 @@
         :class="{ 'active-tab': activeTab === 'settings' }"
         @click="activateTab('settings')"
       >
-        <Icon name="icon-settings" :svg-style="{ fontSize: '24px' }" />
+        <Icon
+          name="icon-settings"
+          :svg-style="{ fontSize: '24px', color: '#86909C' }"
+        />
         <a-typography-paragraph>应用设置</a-typography-paragraph>
       </div>
     </div>

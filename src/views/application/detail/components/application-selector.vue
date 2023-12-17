@@ -6,7 +6,7 @@
       placeholder="请选择应用"
       value-key="id"
       :bordered="false"
-      @change="handlerChange"
+      @change="onSelectChange"
     >
       <a-option
         v-for="item of appList"
@@ -24,21 +24,19 @@
     queryApplicationInfoList,
   } from '@/api/application/index';
   import { onMounted, ref } from 'vue';
-  import { useRouter, useRoute } from 'vue-router';
+  import { useRoute } from 'vue-router';
 
-  const router = useRouter();
   const route = useRoute();
 
   const appList = ref<ApplicationInfo[]>();
   const value = ref();
 
-  const handlerChange = () => {
-    router.push({
-      name: 'ApplicationDetail',
-      params: {
-        appId: value.value.id,
-      },
-    });
+  const emit = defineEmits<{
+    valueChange: [value: ApplicationInfo];
+  }>();
+  const onSelectChange = (newValue: ApplicationInfo) => {
+    // 触发自定义事件，将 value 的新值作为参数传递
+    emit('valueChange', newValue);
   };
 
   onMounted(async () => {
