@@ -19,10 +19,7 @@
 </template>
 
 <script setup lang="ts">
-  import {
-    ApplicationInfo,
-    queryApplicationInfoList,
-  } from '@/api/application/index';
+  import { ApplicationInfo, queryApplicationInfoList } from '@/api/application';
   import { onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router';
 
@@ -45,6 +42,9 @@
     value.value = appList.value?.filter(
       (item) => item.id.toString() === route.params.appId,
     );
+    if (value.value) {
+      emit('valueChange', value.value);
+    }
   });
 </script>
 

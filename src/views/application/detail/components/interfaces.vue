@@ -3,7 +3,7 @@
     <template #first>
       <div class="left-panel">
         <application-selector @value-change="handleValueChange" />
-        <Menu :menu-data="menuData" />
+        <Menu :menu-data="menuData" @refresh="refreshMenu" />
       </div>
     </template>
     <template #resize-trigger>
@@ -23,9 +23,18 @@
   import Menu from './interface-menu.vue';
 
   const menuData = ref<InterfaceMenu[]>();
+  const appId = ref();
 
   const handleValueChange = async (value: ApplicationInfo) => {
-    const res = await queryInterfaceMenu(value.id);
+    if (value.id) {
+      appId.value = value.id;
+      const res = await queryInterfaceMenu(value.id);
+      menuData.value = res.data;
+    }
+  };
+
+  const refreshMenu = async () => {
+    const res = await queryInterfaceMenu(appId.value);
     menuData.value = res.data;
   };
 </script>
