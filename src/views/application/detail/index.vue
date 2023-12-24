@@ -67,6 +67,12 @@
   };
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'ApplicationDetail', // If you want the include property of keep-alive to take effect, you must name the component
+  };
+</script>
+
 <style scoped lang="less">
   @activate-tab-color: #8c78e6;
 

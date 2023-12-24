@@ -1,9 +1,9 @@
 <template>
-  <a-split :style="{ width: '100%' }" default-size="240px" max="800px">
+  <a-split :style="{ width: '100%' }" default-size="280px" max="800px">
     <template #first>
       <div class="left-panel">
         <application-selector @value-change="handleValueChange" />
-        <Menu :menu-data="menuData" @refresh="refreshMenu" />
+        <Menu :menu-data="menuData" :app-id="appId" />
       </div>
     </template>
     <template #resize-trigger>
@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
   import { ApplicationInfo } from '@/api/application';
-  import { queryInterfaceMenu, InterfaceMenu } from '@/api/interface';
+  import { InterfaceMenu } from '@/api/interface';
   import { ref } from 'vue';
   import ApplicationSelector from './application-selector.vue';
   import Menu from './interface-menu.vue';
@@ -25,17 +25,8 @@
   const menuData = ref<InterfaceMenu[]>();
   const appId = ref();
 
-  const handleValueChange = async (value: ApplicationInfo) => {
-    if (value.id) {
-      appId.value = value.id;
-      const res = await queryInterfaceMenu(value.id);
-      menuData.value = res.data;
-    }
-  };
-
-  const refreshMenu = async () => {
-    const res = await queryInterfaceMenu(appId.value);
-    menuData.value = res.data;
+  const handleValueChange = (value: ApplicationInfo) => {
+    appId.value = value.id;
   };
 </script>
 

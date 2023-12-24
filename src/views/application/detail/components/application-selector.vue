@@ -39,7 +39,7 @@
   onMounted(async () => {
     const res = await queryApplicationInfoList();
     appList.value = res.data;
-    value.value = appList.value?.filter(
+    value.value = appList.value?.find(
       (item) => item.id.toString() === route.params.appId,
     );
     if (value.value) {
