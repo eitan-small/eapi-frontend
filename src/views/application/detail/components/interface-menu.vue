@@ -38,13 +38,14 @@
     </div>
     <div class="menu-tree">
       <a-tree
+        v-if="menuData.length > 0"
         ref="treeRef"
         :field-names="{
           key: 'id',
           title: 'name',
           children: 'children',
         }"
-        :data="menuData"
+        :data="treeData.value"
         block-node
         draggable
         @drop="onDrop"
@@ -55,32 +56,11 @@
         </template>
         <template #icon="{ isLeaf, node }">
           <div
-            v-if="isLeaf && node.requestMethod === 'GET'"
+            v-if="isLeaf"
             class="request-method"
-            style="color: #4caf50"
+            :style="getRequestMethodStyle(node.requestMethod)"
           >
-            GET
-          </div>
-          <div
-            v-else-if="isLeaf && node.requestMethod === 'POST'"
-            class="request-method"
-            style="color: #fa8c16"
-          >
-            POST
-          </div>
-          <div
-            v-else-if="isLeaf && node.requestMethod === 'PUT'"
-            class="request-method"
-            style="color: #1890ff"
-          >
-            PUT
-          </div>
-          <div
-            v-else-if="isLeaf && node.requestMethod === 'DEL'"
-            class="request-method"
-            style="color: #fa541c"
-          >
-            DEL
+            {{ getRequestMethodLabel(node.requestMethod) }}
           </div>
           <Icon
             v-else-if="!isLeaf"
@@ -113,42 +93,53 @@
 <script setup lang="ts">
   import { queryInterfaceMenu, InterfaceMenu, ordering } from '@/api/interface';
   import Icon from '@/components/icon/index.vue';
-  import { computed, onMounted, ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
+  import { getRequestMethodLabel, getRequestMethodStyle } from './constants';
 
   interface Props {
     appId?: number;
   }
 
-  const searchKey = ref('');
   const props = defineProps<Props>();
+  // 注册一个自定义事件名，向上传递时告诉父组件要触发的事件。
+  const emit = defineEmits(['activeTag']);
+
+  const searchKey = ref('');
   const treeRef = ref();
   const menuData = ref<InterfaceMenu[]>([]);
 
-  const searchData = (list: InterfaceMenu[], key: string) => {
-    list.filter((item: InterfaceMenu) => {
-      if (item.children && item.children.length > 0) {
-        searchData(item.children, key);
-      }
-      if (item.children && item.children.length > 0) {
-        return true;
-      }
-      if (item.name.toLowerCase().includes(key.toLowerCase())) {
-        return true;
-      }
-      return false;
-    });
+  const searchData = (keyword: string) => {
+    const loop = (data: InterfaceMenu[]) => {
+      const result: InterfaceMenu[] = [];
+      data.forEach((item: InterfaceMenu) => {
+        if (item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
+          result.push({ ...item });
+        } else if (item.children) {
+          const filterData = loop(item.children);
+          if (filterData.length) {
+            result.push({
+              ...item,
+              children: filterData,
+            });
+          }
+        }
+      });
+      return result;
+    };
+
+    return loop(menuData.value);
   };
   // 前端搜索功能
   const treeData = computed(() => {
     if (!searchKey.value) return menuData;
-    return searchData(menuData.value, searchKey.value);
+    return ref(searchData(searchKey.value));
   });
 
-  const emit = defineEmits<{
-    refresh: [];
-  }>();
-
-  const onSelect = (selectedKeys: Array<string | number>) => {
+  const onSelect = (
+    selectedKeys: Array<string | number>,
+    { node }: { node: InterfaceMenu },
+  ) => {
+    // 展开文件夹节点
     const expandedNodes = treeRef.value
       .getExpandedNodes()
       .map((item: InterfaceMenu) => {
@@ -158,6 +149,11 @@
       selectedKeys[0],
       !expandedNodes.includes(selectedKeys[0]),
     );
+    // 点击文件节点
+    if (node.type === 2) {
+      // 在 emitter 上触发事件
+      emit('activeTag', node);
+    }
   };
 
   const queryMenuData = async () => {
@@ -173,11 +169,6 @@
     await ordering(dragNode.id, dropNode.id, dropPosition);
     queryMenuData();
   };
-
-  // 在组件初始化时调用一次
-  onMounted(() => {
-    queryMenuData();
-  });
 
   // 监听 appId 的变化，当 appId 变化时重新查询菜单数据
   watch(

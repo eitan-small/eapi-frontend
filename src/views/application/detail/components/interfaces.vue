@@ -3,30 +3,37 @@
     <template #first>
       <div class="left-panel">
         <application-selector @value-change="handleValueChange" />
-        <Menu :menu-data="menuData" :app-id="appId" />
+        <Menu :app-id="appId" @active-tag="activeTag" />
       </div>
     </template>
     <template #resize-trigger>
       <div class="resize-trigger"></div>
     </template>
     <template #second>
-      <div class="right-panel">RIGHT</div>
+      <div class="right-panel">
+        <InterfacePanel ref="panelRef" :app-id="appId" />
+      </div>
     </template>
   </a-split>
 </template>
 
 <script setup lang="ts">
   import { ApplicationInfo } from '@/api/application';
-  import { InterfaceMenu } from '@/api/interface';
   import { ref } from 'vue';
+  import { InterfaceMenu } from '@/api/interface';
   import ApplicationSelector from './application-selector.vue';
   import Menu from './interface-menu.vue';
+  import InterfacePanel from './interface-panel.vue';
 
-  const menuData = ref<InterfaceMenu[]>();
   const appId = ref();
+  const panelRef = ref();
 
   const handleValueChange = (value: ApplicationInfo) => {
     appId.value = value.id;
+  };
+
+  const activeTag = (tag: InterfaceMenu) => {
+    panelRef.value.activeTag(tag);
   };
 </script>
 
