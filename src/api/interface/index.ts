@@ -8,6 +8,7 @@ export interface InterfaceMenu {
   path?: string;
   requestMethod?: string;
   responsiblePersonName?: string;
+  appId: number;
   appName: string;
   appNameCn: string;
   order: number;

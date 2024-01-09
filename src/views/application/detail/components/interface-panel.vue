@@ -36,7 +36,7 @@
             </a-typography-paragraph>
           </div>
         </template>
-        {{ item.name }}
+        <InterfacePanelDetail :tag-info="item" />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -46,6 +46,7 @@
   import { ref } from 'vue';
   import { InterfaceMenu } from '@/api/interface';
   import { getRequestMethodLabel, getRequestMethodStyle } from './constants';
+  import InterfacePanelDetail from './interface-panel-detail.vue';
 
   interface Props {
     appId?: number;
