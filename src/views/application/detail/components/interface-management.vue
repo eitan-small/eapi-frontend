@@ -2,8 +2,23 @@
   <a-split :style="{ width: '100%' }" default-size="280px" max="800px">
     <template #first>
       <div class="left-panel">
-        <application-selector @value-change="handleValueChange" />
-        <Menu :app-id="appId" @active-tag="activeTag" />
+        <div class="selector-container">
+          <a-select
+            v-model="selectorValue"
+            :style="{ width: '223px' }"
+            placeholder="请选择应用"
+            value-key="id"
+            :bordered="false"
+          >
+            <a-option
+              v-for="item of appList"
+              :key="item.id"
+              :value="item"
+              :label="item.appName"
+            />
+          </a-select>
+        </div>
+        <Menu :app-id="selectorValue?.id" @active-tag="activeTag" />
       </div>
     </template>
     <template #resize-trigger>
@@ -11,30 +26,38 @@
     </template>
     <template #second>
       <div class="right-panel">
-        <InterfacePanel ref="panelRef" :app-id="appId" />
+        <InterfacePanel ref="panelRef" :app-id="selectorValue?.id" />
       </div>
     </template>
   </a-split>
 </template>
 
 <script setup lang="ts">
-  import { ApplicationInfo } from '@/api/application';
-  import { ref } from 'vue';
+  import { ApplicationInfo, queryApplicationInfoList } from '@/api/application';
+  import { onMounted, ref } from 'vue';
   import { InterfaceMenu } from '@/api/interface';
-  import ApplicationSelector from './application-selector.vue';
+  import { useRoute } from 'vue-router';
   import Menu from './interface-menu.vue';
   import InterfacePanel from './interface-panel.vue';
 
-  const appId = ref();
-  const panelRef = ref();
+  const route = useRoute();
 
-  const handleValueChange = (value: ApplicationInfo) => {
-    appId.value = value.id;
-  };
+  const appList = ref<ApplicationInfo[]>();
+  const selectorValue = ref();
+
+  const panelRef = ref();
 
   const activeTag = (tag: InterfaceMenu) => {
     panelRef.value.activeTag(tag);
   };
+
+  onMounted(async () => {
+    const res = await queryApplicationInfoList();
+    appList.value = res.data;
+    selectorValue.value = appList.value?.find(
+      (item) => item.id.toString() === route.params.appId,
+    );
+  });
 </script>
 
 <style scoped lang="less">
@@ -64,5 +87,10 @@
     height: 100%;
     background: #fff;
     user-select: none;
+  }
+
+  .selector-container {
+    display: flex;
+    margin: 8px;
   }
 </style>
