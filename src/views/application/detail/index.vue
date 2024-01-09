@@ -12,7 +12,7 @@
       <div
         class="tab-wrapper"
         :class="{ 'active-tab': activeTab === 'Interfaces' }"
-        @click="activateTab('Interfaces')"
+        @click="activateTab('InterfaceManagement')"
       >
         <Icon
           name="icon-share-alt"
@@ -40,14 +40,14 @@
   import Icon from '@/components/icon/index.vue';
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import Interfaces from './components/interfaces.vue';
+  import InterfaceManagement from './components/interface-management.vue';
 
   const router = useRouter();
   const iconName = ref('Pokemon');
-  const activeTab = ref('Interfaces');
+  const activeTab = ref('InterfaceManagement');
 
   const componentMap: any = {
-    Interfaces,
+    InterfaceManagement,
   };
 
   const changeIconName = () => {

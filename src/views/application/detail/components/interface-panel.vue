@@ -22,7 +22,11 @@
               {{ getRequestMethodLabel(item.requestMethod as string) }}
             </div>
             <a-typography-paragraph
-              :style="{ margin: '0 0 0 5px', maxWidth: `150px` }"
+              :style="{
+                margin: '0 0 0 5px',
+                maxWidth: `100px`,
+                minWidth: '100px',
+              }"
               :ellipsis="{
                 rows: 1,
                 showTooltip: true,
@@ -76,7 +80,7 @@
     const tag = {
       id: Date.now(),
       requestMethod: 'GET',
-      name: '新建接口新建接口新建接口新建接口新建接口新建接口',
+      name: '新建接口',
       // 表示新建接口，暂存未入库
       type: 0,
     } as InterfaceMenu;
