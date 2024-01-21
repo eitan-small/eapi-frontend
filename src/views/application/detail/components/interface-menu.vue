@@ -245,6 +245,10 @@
     :deep(.arco-tree-node-custom-icon) {
       margin-right: 3px;
     }
+
+    :deep(.arco-tree-node-drag-icon) {
+      right: 6px;
+    }
   }
 
   .request-method {
